@@ -2,7 +2,7 @@
 This microservice allows users to CRUD (Add books with details, Retrieve the list of books, Update book details and Delete a book from the inventory).
 
 ## Technology
-Java with Spring Boot and an embedded H2 database.
+Java with Spring Boot, an embedded H2 database and Docker.
 
 ## Requirments
 The only will be needed is a Docker. Ensure you have Docker installed on your computer.
