@@ -3,10 +3,14 @@ package com.BookInventoryManagement.Microservice.controller;
 import com.BookInventoryManagement.Microservice.model.Book;
 import com.BookInventoryManagement.Microservice.view.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -29,6 +33,17 @@ public class BookController {
         List<Book> bookList = StreamSupport.stream(booksIterable.spliterator(), false)
                 .collect(Collectors.toList());
         return bookList;
+    }
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable Long id) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if(bookOptional.isPresent()){
+            return bookOptional.get();
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Book not found"
+            );
+        }
     }
     @PutMapping("/{id}")
     public Book updateBook(@PathVariable Long id,@RequestBody Book book) {
